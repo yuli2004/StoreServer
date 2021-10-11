@@ -8,6 +8,8 @@ CREATE TABLE "user"(
 );
 ALTER TABLE
     "user" ADD CONSTRAINT "user_username_primary" PRIMARY KEY("username");
+CREATE UNIQUE INDEX "user_email_unique" ON
+    "user"("email");
 CREATE TABLE "seller"(
     "username" NVARCHAR(255) NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
@@ -35,23 +37,21 @@ CREATE TABLE "product"(
     "isActive" BIT NOT NULL,
     "advertisingDate" DATE NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
-    "shipsFrom" NVARCHAR(255) NOT NULL
+    "shipsFrom" NVARCHAR(255) NOT NULL,
+    "stock" INT NOT NULL
 );
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_sellerusername_primary" PRIMARY KEY("sellerUsername");
-CREATE UNIQUE INDEX "product_productid_unique" ON
-    "product"("productID");
+    "product" ADD CONSTRAINT "product_productid_primary" PRIMARY KEY("productID");
 CREATE TABLE "review"(
     "productID" INT NOT NULL,
     "buyerUsername" NVARCHAR(255) NOT NULL,
     "text" NVARCHAR(255) NOT NULL,
     "sellerUsername" NVARCHAR(255) NOT NULL,
-    "picture" NVARCHAR(255) NOT NULL
+    "picture" NVARCHAR(255) NOT NULL,
+    "reviewID" INT NOT NULL
 );
 ALTER TABLE
-    "review" ADD CONSTRAINT "review_productid_primary" PRIMARY KEY("productID");
-ALTER TABLE
-    "review" ADD CONSTRAINT "review_buyerusername_primary" PRIMARY KEY("buyerUsername");
+    "review" ADD CONSTRAINT "review_reviewid_primary" PRIMARY KEY("reviewID");
 CREATE TABLE "colors"(
     "colorID" INT NOT NULL,
     "color" NVARCHAR(255) NOT NULL
@@ -64,55 +64,46 @@ CREATE TABLE "productType"(
 );
 ALTER TABLE
     "productType" ADD CONSTRAINT "producttype_typeid_primary" PRIMARY KEY("typeID");
-CREATE TABLE "purchaseHistory"(
-    "buyerUsername" NVARCHAR(255) NOT NULL,
-    "date" DATE NOT NULL,
-    "price" FLOAT NOT NULL,
-    "productID" INT NOT NULL,
-    "sellerUsername" NVARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    "purchaseHistory" ADD CONSTRAINT "purchasehistory_buyerusername_primary" PRIMARY KEY("buyerUsername");
-ALTER TABLE
-    "purchaseHistory" ADD CONSTRAINT "purchasehistory_productid_primary" PRIMARY KEY("productID");
 CREATE TABLE "order"(
     "orderID" INT NOT NULL,
     "statusID" INT NOT NULL,
-    "price" FLOAT NOT NULL,
-    "productID" INT NOT NULL,
-    "sellerUsername" NVARCHAR(255) NOT NULL,
+    "totalPrice" FLOAT NOT NULL,
     "buyerUsername" NVARCHAR(255) NOT NULL,
     "date" DATE NOT NULL
 );
-CREATE UNIQUE INDEX "order_orderid_unique" ON
-    "order"("orderID");
 ALTER TABLE
-    "order" ADD CONSTRAINT "order_productid_primary" PRIMARY KEY("productID");
-ALTER TABLE
-    "order" ADD CONSTRAINT "order_sellerusername_primary" PRIMARY KEY("sellerUsername");
-ALTER TABLE
-    "order" ADD CONSTRAINT "order_buyerusername_primary" PRIMARY KEY("buyerUsername");
+    "order" ADD CONSTRAINT "order_orderid_primary" PRIMARY KEY("orderID");
 CREATE TABLE "orderStatus"(
     "statusID" INT NOT NULL,
     "status" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "orderStatus" ADD CONSTRAINT "orderstatus_statusid_primary" PRIMARY KEY("statusID");
+CREATE TABLE "productInOrder"(
+    "productID" INT NOT NULL,
+    "orderID" INT NOT NULL,
+    "ID" INT NOT NULL,
+    "quantity" INT NOT NULL
+);
+ALTER TABLE
+    "productInOrder" ADD CONSTRAINT "productinorder_id_primary" PRIMARY KEY("ID");
 ALTER TABLE
     "review" ADD CONSTRAINT "review_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("username");
 ALTER TABLE
-    "purchaseHistory" ADD CONSTRAINT "purchasehistory_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("username");
+    "product" ADD CONSTRAINT "product_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("username");
 ALTER TABLE
-    "order" ADD CONSTRAINT "order_date_foreign" FOREIGN KEY("date") REFERENCES "buyer"("username");
+    "review" ADD CONSTRAINT "review_buyerusername_foreign" FOREIGN KEY("buyerUsername") REFERENCES "buyer"("username");
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_productid_foreign" FOREIGN KEY("productID") REFERENCES "review"("productID");
+    "order" ADD CONSTRAINT "order_buyerusername_foreign" FOREIGN KEY("buyerUsername") REFERENCES "buyer"("username");
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_productid_foreign" FOREIGN KEY("productID") REFERENCES "order"("productID");
+    "review" ADD CONSTRAINT "review_productid_foreign" FOREIGN KEY("productID") REFERENCES "product"("productID");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_colorid_foreign" FOREIGN KEY("colorID") REFERENCES "colors"("colorID");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_typeid_foreign" FOREIGN KEY("typeID") REFERENCES "productType"("typeID");
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_productid_foreign" FOREIGN KEY("productID") REFERENCES "purchaseHistory"("productID");
-ALTER TABLE
     "order" ADD CONSTRAINT "order_statusid_foreign" FOREIGN KEY("statusID") REFERENCES "orderStatus"("statusID");
+ALTER TABLE
+    "productInOrder" ADD CONSTRAINT "productinorder_productid_foreign" FOREIGN KEY("productID") REFERENCES "product"("productID");
+ALTER TABLE
+    "productInOrder" ADD CONSTRAINT "productinorder_orderid_foreign" FOREIGN KEY("orderID") REFERENCES "order"("orderID");
