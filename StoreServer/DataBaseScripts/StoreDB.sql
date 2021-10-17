@@ -1,4 +1,11 @@
+use master
+go
+
+CREATE DATABASE StoreDB
+go
+
 USE StoreDB
+go
 
 CREATE TABLE "user"(
     "username" NVARCHAR(255) NOT NULL,
