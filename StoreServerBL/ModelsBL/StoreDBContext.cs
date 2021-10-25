@@ -17,5 +17,17 @@ namespace StoreServerBL.Models
         {
             return this.Users.Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
+        public void RegisterBuyer(Buyer userBuyer)
+        {
+            try
+            {
+                this.Buyers.Add(userBuyer);
+                this.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

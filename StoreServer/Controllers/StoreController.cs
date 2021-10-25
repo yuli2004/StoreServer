@@ -44,6 +44,28 @@ namespace StoreServer.Controllers
             }
         }
         #endregion
+
+        #region buyer register
+        [Route("RegisterBuyer")]
+        [HttpPost]
+        public Buyer RegisterBuyer([FromBody] Buyer userBuyer)
+        {
+            //Check user name and password
+            if (userBuyer != null)
+            {
+                this.context.RegisterBuyer(userBuyer);
+                HttpContext.Session.SetObject("theUser", userBuyer);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return userBuyer;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        #endregion
     }
 
 
