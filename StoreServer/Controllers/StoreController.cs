@@ -21,5 +21,30 @@ namespace StoreServer.Controllers
             this.context = context;
         }
         #endregion
+        #region LogIn
+        [Route("LogIn")]
+        [HttpGet]
+        public  User LogIn([FromQuery]string username, [FromQuery] string pass)
+        {
+            User user = this.context.LogIn(username, pass);
+            if(user==null)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }    
+            else
+            {
+                //save the user in session
+                HttpContext.Session.SetObject("userLogin", user);
+
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return user;
+            }
+        }
+        #endregion
     }
+
+
 }
