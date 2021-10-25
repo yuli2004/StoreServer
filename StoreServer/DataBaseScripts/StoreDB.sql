@@ -117,4 +117,18 @@ ALTER TABLE
 ALTER TABLE
     "productInOrder" ADD CONSTRAINT "productinorder_orderid_foreign" FOREIGN KEY("orderID") REFERENCES "order"("orderID");
 
-
+INSERT INTO [dbo].[user]
+           ([username]
+           ,[password]
+           ,[email]
+           ,[isAdmin]
+           ,[isSeller]
+           ,[isBuyer])
+     VALUES
+           ('yuli',
+		   '1234',
+		   'yuli@gmail.com',
+		   'true',
+		   'false',
+		   'false')
+GO	
