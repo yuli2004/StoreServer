@@ -13,8 +13,10 @@ namespace StoreServerBL.Models
             Reviews = new HashSet<Review>();
         }
 
-        public string Username { get; set; }
+        public int Username { get; set; }
+        public string Userid { get; set; }
 
+        public virtual User User { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }

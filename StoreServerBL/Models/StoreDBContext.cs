@@ -48,9 +48,18 @@ namespace StoreServerBL.Models
 
                 entity.ToTable("buyer");
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.Username).HasColumnName("username");
+
+                entity.Property(e => e.Userid)
+                    .IsRequired()
                     .HasMaxLength(255)
-                    .HasColumnName("username");
+                    .HasColumnName("userid");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Buyers)
+                    .HasForeignKey(d => d.Userid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("buyer_username_foreign");
             });
 
             modelBuilder.Entity<Color>(entity =>
@@ -75,10 +84,7 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("orderID");
 
-                entity.Property(e => e.BuyerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerUsername).HasColumnName("buyerUsername");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
@@ -199,7 +205,9 @@ namespace StoreServerBL.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("orderID");
 
-                entity.Property(e => e.ProductId).HasColumnName("productID");
+                entity.Property(e => e.ProductId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("productID");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
@@ -241,10 +249,7 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("reviewID");
 
-                entity.Property(e => e.BuyerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerUsername).HasColumnName("buyerUsername");
 
                 entity.Property(e => e.Picture)
                     .IsRequired()

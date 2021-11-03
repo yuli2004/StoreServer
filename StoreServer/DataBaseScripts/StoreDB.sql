@@ -30,10 +30,14 @@ CREATE TABLE "seller"(
 ALTER TABLE
     "seller" ADD CONSTRAINT "seller_username_primary" PRIMARY KEY("username");
 CREATE TABLE "buyer"(
-    "username" NVARCHAR(255) NOT NULL
+    "username" int IDENTITY(1,1) NOT NULL,
+    "userid" NVARCHAR(255) NOT NULL,
 );
 ALTER TABLE
     "buyer" ADD CONSTRAINT "buyer_username_primary" PRIMARY KEY("username");
+    ALTER TABLE [dbo].[buyer]  WITH CHECK ADD  CONSTRAINT [buyer_username_foreign] FOREIGN KEY([userid])
+REFERENCES [dbo].[user] ([username]);
+
 CREATE TABLE "product"(
     "sellerUsername" NVARCHAR(255) NOT NULL,
     "productName" NVARCHAR(255) NOT NULL,
@@ -53,7 +57,7 @@ ALTER TABLE
     "product" ADD CONSTRAINT "product_productid_primary" PRIMARY KEY("productID");
 CREATE TABLE "review"(
     "productID" INT NOT NULL,
-    "buyerUsername" NVARCHAR(255) NOT NULL,
+    "buyerUsername" int NOT NULL,
     "text" NVARCHAR(255) NOT NULL,
     "sellerUsername" NVARCHAR(255) NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
@@ -77,7 +81,7 @@ CREATE TABLE "order"(
     "orderID" INT NOT NULL,
     "statusID" INT NOT NULL,
     "totalPrice" FLOAT NOT NULL,
-    "buyerUsername" NVARCHAR(255) NOT NULL,
+    "buyerUsername" int NOT NULL,
     "date" DATE NOT NULL
 );
 ALTER TABLE
@@ -89,7 +93,7 @@ CREATE TABLE "orderStatus"(
 ALTER TABLE
     "orderStatus" ADD CONSTRAINT "orderstatus_statusid_primary" PRIMARY KEY("statusID");
 CREATE TABLE "productInOrder"(
-    "productID" INT NOT NULL,
+    "productID" INT IDENTITY(1,1) NOT NULL,
     "orderID" INT NOT NULL,
     "ID" INT NOT NULL,
     "quantity" INT NOT NULL
