@@ -30,7 +30,7 @@ CREATE TABLE "seller"(
 ALTER TABLE
     "seller" ADD CONSTRAINT "seller_username_primary" PRIMARY KEY("username");
 CREATE TABLE "buyer"(
-    "username" int IDENTITY(1,1) NOT NULL,
+    "username" int IDENTITY(1,1) NOT NULL,--
     "userid" NVARCHAR(255) NOT NULL,
 );
 ALTER TABLE
