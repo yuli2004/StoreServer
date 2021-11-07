@@ -67,6 +67,50 @@ namespace StoreServer.Controllers
             }
         }
         #endregion
+
+        #region UserExistsByEmail
+        [Route("UserExistsByEmail")]
+        [HttpGet]
+        public bool UserExistsByEmail([FromQuery] string email)
+        {
+            bool exist = this.context.UserExistsByEmail(email);
+
+            if (exist)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
+
+        #region UserExistsByUsername
+        [Route("UserExistsByUsername")]
+        [HttpGet]
+        public bool UserExistsByUsername([FromQuery] string username)
+        {
+            bool exist = this.context.UserExistsByUsername(username);
+
+            if (exist)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
     }
 
 

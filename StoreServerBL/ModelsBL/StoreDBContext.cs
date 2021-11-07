@@ -12,11 +12,14 @@ namespace StoreServerBL.Models
 {
     public partial class StoreDBContext : DbContext
     {
-
+        #region Log in
         public User LogIn(string userName, string pass)
         {
             return this.Users.Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
+        #endregion
+
+        #region Register buyer
         public void RegisterBuyer(Buyer userBuyer)
         {
             try
@@ -29,5 +32,22 @@ namespace StoreServerBL.Models
                 Console.WriteLine(e.Message);
             }
         }
+        #endregion
+
+        #region UserExistsByEmail
+        // פעולה הבודקת האם האימייל שהתקבל הוא ייחודי או שהוא כבר קיים ברשימת המשתמשים
+        public bool UserExistsByEmail(string email)
+        {
+            return Users.Any(u => u.Email == email);
+        }
+        #endregion
+
+        #region UserExistByPassword
+        // פעולה הבודקת האם הסיסמה שהתקבלה היא ייחודית או שהיא כבר קיים ברשימת המשתמשים
+        public bool UserExistsByUsername(string username)
+        {
+            return Users.Any(u => u.Username == username);
+        }
+        #endregion
     }
 }
