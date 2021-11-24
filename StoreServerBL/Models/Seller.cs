@@ -18,7 +18,6 @@ namespace StoreServerBL.Models
         public string Info { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public string Country { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

@@ -19,13 +19,14 @@ namespace StoreServerBL.Models
 
         public virtual DbSet<Buyer> Buyers { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
+        public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductInOrder> ProductInOrders { get; set; }
-        public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Seller> Sellers { get; set; }
+        public virtual DbSet<Style> Styles { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,18 +49,9 @@ namespace StoreServerBL.Models
 
                 entity.ToTable("buyer");
 
-                entity.Property(e => e.Username).HasColumnName("username");
-
-                entity.Property(e => e.Userid)
-                    .IsRequired()
+                entity.Property(e => e.Username)
                     .HasMaxLength(255)
-                    .HasColumnName("userid");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Buyers)
-                    .HasForeignKey(d => d.Userid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("buyer_username_foreign");
+                    .HasColumnName("username");
             });
 
             modelBuilder.Entity<Color>(entity =>
@@ -76,6 +68,20 @@ namespace StoreServerBL.Models
                     .HasColumnName("color");
             });
 
+            modelBuilder.Entity<Material>(entity =>
+            {
+                entity.ToTable("materials");
+
+                entity.Property(e => e.MaterialId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("materialID");
+
+                entity.Property(e => e.Material1)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("material");
+            });
+
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("order");
@@ -84,7 +90,10 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("orderID");
 
-                entity.Property(e => e.BuyerUsername).HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerUsername)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("buyerUsername");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
@@ -145,10 +154,7 @@ namespace StoreServerBL.Models
 
                 entity.Property(e => e.IsActive).HasColumnName("isActive");
 
-                entity.Property(e => e.Material)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("material");
+                entity.Property(e => e.MaterialId).HasColumnName("materialID");
 
                 entity.Property(e => e.Picture)
                     .IsRequired()
@@ -167,14 +173,12 @@ namespace StoreServerBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("sellerUsername");
 
-                entity.Property(e => e.ShipsFrom)
+                entity.Property(e => e.Size)
                     .IsRequired()
                     .HasMaxLength(255)
-                    .HasColumnName("shipsFrom");
+                    .HasColumnName("size");
 
-                entity.Property(e => e.Stock).HasColumnName("stock");
-
-                entity.Property(e => e.TypeId).HasColumnName("typeID");
+                entity.Property(e => e.StyleId).HasColumnName("styleID");
 
                 entity.HasOne(d => d.Color)
                     .WithMany(p => p.Products)
@@ -182,17 +186,23 @@ namespace StoreServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("product_colorid_foreign");
 
+                entity.HasOne(d => d.Material)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.MaterialId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("product_materialid_foreign");
+
                 entity.HasOne(d => d.SellerUsernameNavigation)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.SellerUsername)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("product_sellerusername_foreign");
 
-                entity.HasOne(d => d.Type)
+                entity.HasOne(d => d.Style)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.TypeId)
+                    .HasForeignKey(d => d.StyleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("product_typeid_foreign");
+                    .HasConstraintName("product_styleid_foreign");
             });
 
             modelBuilder.Entity<ProductInOrder>(entity =>
@@ -205,11 +215,7 @@ namespace StoreServerBL.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("orderID");
 
-                entity.Property(e => e.ProductId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("productID");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
+                entity.Property(e => e.ProductId).HasColumnName("productID");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.ProductInOrders)
@@ -224,23 +230,6 @@ namespace StoreServerBL.Models
                     .HasConstraintName("productinorder_productid_foreign");
             });
 
-            modelBuilder.Entity<ProductType>(entity =>
-            {
-                entity.HasKey(e => e.TypeId)
-                    .HasName("producttype_typeid_primary");
-
-                entity.ToTable("productType");
-
-                entity.Property(e => e.TypeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("typeID");
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("type");
-            });
-
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.ToTable("review");
@@ -249,7 +238,10 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("reviewID");
 
-                entity.Property(e => e.BuyerUsername).HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerUsername)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("buyerUsername");
 
                 entity.Property(e => e.Picture)
                     .IsRequired()
@@ -298,11 +290,6 @@ namespace StoreServerBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("username");
 
-                entity.Property(e => e.Country)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("country");
-
                 entity.Property(e => e.Info)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -319,6 +306,20 @@ namespace StoreServerBL.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("picture");
+            });
+
+            modelBuilder.Entity<Style>(entity =>
+            {
+                entity.ToTable("styles");
+
+                entity.Property(e => e.StyleId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("styleID");
+
+                entity.Property(e => e.Style1)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("style");
             });
 
             modelBuilder.Entity<User>(entity =>

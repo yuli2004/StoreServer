@@ -8,7 +8,7 @@ namespace StoreServerBL.Models
     public partial class Review
     {
         public int ProductId { get; set; }
-        public int BuyerUsername { get; set; }
+        public string BuyerUsername { get; set; }
         public string Text { get; set; }
         public string SellerUsername { get; set; }
         public string Picture { get; set; }
