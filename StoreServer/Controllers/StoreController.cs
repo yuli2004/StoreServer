@@ -68,6 +68,28 @@ namespace StoreServer.Controllers
         }
         #endregion
 
+        #region seller register
+        [Route("RegisterSeller")]
+        [HttpPost]
+        public Seller RegisterSeller([FromBody] Seller userSeller)
+        {
+            //Check user name and password
+            if (userSeller != null)
+            {
+                this.context.RegisterSeller(userSeller);
+                HttpContext.Session.SetObject("theUser", userSeller);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return userSeller;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        #endregion
+
         #region UserExistsByEmail
         [Route("UserExistsByEmail")]
         [HttpGet]
@@ -109,6 +131,41 @@ namespace StoreServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return false;
             }
+        }
+        #endregion
+
+        #region upload image
+        [Route("UploadImage")]
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the contact user ID
+            if (user != null)
+            {
+                if (file == null)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+
+                    return Ok(new { length = file.Length, name = file.FileName });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return BadRequest();
+                }
+            }
+            return Forbid();
         }
         #endregion
     }

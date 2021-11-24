@@ -34,6 +34,21 @@ namespace StoreServerBL.Models
         }
         #endregion
 
+        #region Register seller
+        public void RegisterSeller(Seller userSeller)
+        {
+            try
+            {
+                this.Sellers.Add(userSeller);
+                this.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
+
         #region UserExistsByEmail
         // פעולה הבודקת האם האימייל שהתקבל הוא ייחודי או שהוא כבר קיים ברשימת המשתמשים
         public bool UserExistsByEmail(string email)
@@ -42,7 +57,7 @@ namespace StoreServerBL.Models
         }
         #endregion
 
-        #region UserExistByPassword
+        #region UserExistByUsername
         // פעולה הבודקת האם הסיסמה שהתקבלה היא ייחודית או שהיא כבר קיים ברשימת המשתמשים
         public bool UserExistsByUsername(string username)
         {
