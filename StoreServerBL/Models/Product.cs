@@ -14,7 +14,7 @@ namespace StoreServerBL.Models
         }
 
         public int ProductId { get; set; }
-        public string SellerUsername { get; set; }
+        public int SellerId { get; set; }
         public string Picture { get; set; }
         public string ProductName { get; set; }
         public string Details { get; set; }
@@ -28,7 +28,7 @@ namespace StoreServerBL.Models
 
         public virtual Color Color { get; set; }
         public virtual Material Material { get; set; }
-        public virtual Seller SellerUsernameNavigation { get; set; }
+        public virtual Seller Seller { get; set; }
         public virtual Style Style { get; set; }
         public virtual ICollection<ProductInOrder> ProductInOrders { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

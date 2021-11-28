@@ -44,14 +44,25 @@ namespace StoreServerBL.Models
 
             modelBuilder.Entity<Buyer>(entity =>
             {
-                entity.HasKey(e => e.Username)
-                    .HasName("buyer_username_primary");
-
                 entity.ToTable("buyer");
 
+                entity.HasIndex(e => e.Username, "buyer_username_unique")
+                    .IsUnique();
+
+                entity.Property(e => e.BuyerId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("buyerId");
+
                 entity.Property(e => e.Username)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("username");
+
+                entity.HasOne(d => d.UsernameNavigation)
+                    .WithOne(p => p.Buyer)
+                    .HasForeignKey<Buyer>(d => d.Username)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("buyer_username_foreign");
             });
 
             modelBuilder.Entity<Color>(entity =>
@@ -90,10 +101,7 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("orderID");
 
-                entity.Property(e => e.BuyerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
@@ -103,11 +111,11 @@ namespace StoreServerBL.Models
 
                 entity.Property(e => e.TotalPrice).HasColumnName("totalPrice");
 
-                entity.HasOne(d => d.BuyerUsernameNavigation)
+                entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.BuyerUsername)
+                    .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("order_buyerusername_foreign");
+                    .HasConstraintName("order_buyerid_foreign");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Orders)
@@ -168,10 +176,7 @@ namespace StoreServerBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("productName");
 
-                entity.Property(e => e.SellerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("sellerUsername");
+                entity.Property(e => e.SellerId).HasColumnName("sellerId");
 
                 entity.Property(e => e.Size)
                     .IsRequired()
@@ -192,11 +197,11 @@ namespace StoreServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("product_materialid_foreign");
 
-                entity.HasOne(d => d.SellerUsernameNavigation)
+                entity.HasOne(d => d.Seller)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.SellerUsername)
+                    .HasForeignKey(d => d.SellerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("product_sellerusername_foreign");
+                    .HasConstraintName("product_sellerid_foreign");
 
                 entity.HasOne(d => d.Style)
                     .WithMany(p => p.Products)
@@ -238,10 +243,7 @@ namespace StoreServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("reviewID");
 
-                entity.Property(e => e.BuyerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("buyerUsername");
+                entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
                 entity.Property(e => e.Picture)
                     .IsRequired()
@@ -250,21 +252,18 @@ namespace StoreServerBL.Models
 
                 entity.Property(e => e.ProductId).HasColumnName("productID");
 
-                entity.Property(e => e.SellerUsername)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("sellerUsername");
+                entity.Property(e => e.SellerId).HasColumnName("sellerId");
 
                 entity.Property(e => e.Text)
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("text");
 
-                entity.HasOne(d => d.BuyerUsernameNavigation)
+                entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.BuyerUsername)
+                    .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_buyerusername_foreign");
+                    .HasConstraintName("review_buyerId_foreign");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Reviews)
@@ -272,23 +271,23 @@ namespace StoreServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("review_productid_foreign");
 
-                entity.HasOne(d => d.SellerUsernameNavigation)
+                entity.HasOne(d => d.Seller)
                     .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.SellerUsername)
+                    .HasForeignKey(d => d.SellerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_sellerusername_foreign");
+                    .HasConstraintName("review_sellerid_foreign");
             });
 
             modelBuilder.Entity<Seller>(entity =>
             {
-                entity.HasKey(e => e.Username)
-                    .HasName("seller_username_primary");
-
                 entity.ToTable("seller");
 
-                entity.Property(e => e.Username)
-                    .HasMaxLength(255)
-                    .HasColumnName("username");
+                entity.HasIndex(e => e.Username, "seller_username_unique")
+                    .IsUnique();
+
+                entity.Property(e => e.SellerId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("sellerId");
 
                 entity.Property(e => e.Info)
                     .IsRequired()
@@ -306,6 +305,17 @@ namespace StoreServerBL.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("picture");
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("username");
+
+                entity.HasOne(d => d.UsernameNavigation)
+                    .WithOne(p => p.Seller)
+                    .HasForeignKey<Seller>(d => d.Username)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("seller_username_foreign");
             });
 
             modelBuilder.Entity<Style>(entity =>

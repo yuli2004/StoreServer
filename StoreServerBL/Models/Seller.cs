@@ -13,12 +13,14 @@ namespace StoreServerBL.Models
             Reviews = new HashSet<Review>();
         }
 
+        public int SellerId { get; set; }
         public string Username { get; set; }
         public string Picture { get; set; }
         public string Info { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
+        public virtual User UsernameNavigation { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
