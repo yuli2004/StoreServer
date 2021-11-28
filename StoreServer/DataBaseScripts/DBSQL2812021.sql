@@ -1,7 +1,3 @@
-USE master
-CREATE DATABASE StoreDB
-USE StoreDB
-
 CREATE TABLE "user"(
     "username" NVARCHAR(255) NOT NULL,
     "password" NVARCHAR(255) NOT NULL,
@@ -15,6 +11,7 @@ ALTER TABLE
 CREATE UNIQUE INDEX "user_email_unique" ON
     "user"("email");
 CREATE TABLE "seller"(
+    "sellerId" INT NOT NULL,
     "username" NVARCHAR(255) NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
     "info" NVARCHAR(255) NOT NULL,
@@ -22,15 +19,20 @@ CREATE TABLE "seller"(
     "isActive" BIT NOT NULL
 );
 ALTER TABLE
-    "seller" ADD CONSTRAINT "seller_username_primary" PRIMARY KEY("username");
+    "seller" ADD CONSTRAINT "seller_sellerid_primary" PRIMARY KEY("sellerId");
+CREATE UNIQUE INDEX "seller_username_unique" ON
+    "seller"("username");
 CREATE TABLE "buyer"(
+    "buyerId" INT NOT NULL,
     "username" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
-    "buyer" ADD CONSTRAINT "buyer_username_primary" PRIMARY KEY("username");
+    "buyer" ADD CONSTRAINT "buyer_buyerid_primary" PRIMARY KEY("buyerId");
+CREATE UNIQUE INDEX "buyer_username_unique" ON
+    "buyer"("username");
 CREATE TABLE "product"(
     "productID" INT NOT NULL,
-    "sellerUsername" NVARCHAR(255) NOT NULL,
+    "sellerId" INT NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
     "productName" NVARCHAR(255) NOT NULL,
     "details" NVARCHAR(255) NOT NULL,
@@ -70,7 +72,7 @@ CREATE TABLE "order"(
     "orderID" INT NOT NULL,
     "statusID" INT NOT NULL,
     "totalPrice" FLOAT NOT NULL,
-    "buyerUsername" NVARCHAR(255) NOT NULL,
+    "buyerId" INT NOT NULL,
     "date" DATE NOT NULL
 );
 ALTER TABLE
@@ -95,19 +97,23 @@ CREATE TABLE "styles"(
 ALTER TABLE
     "styles" ADD CONSTRAINT "styles_styleid_primary" PRIMARY KEY("styleID");
 ALTER TABLE
-    "review" ADD CONSTRAINT "review_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("username");
+    "seller" ADD CONSTRAINT "seller_username_foreign" FOREIGN KEY("username") REFERENCES "user"("username");
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("username");
+    "buyer" ADD CONSTRAINT "buyer_username_foreign" FOREIGN KEY("username") REFERENCES "user"("username");
 ALTER TABLE
-    "review" ADD CONSTRAINT "review_buyerusername_foreign" FOREIGN KEY("buyerUsername") REFERENCES "buyer"("username");
-ALTER TABLE
-    "order" ADD CONSTRAINT "order_buyerusername_foreign" FOREIGN KEY("buyerUsername") REFERENCES "buyer"("username");
+    "review" ADD CONSTRAINT "review_buyerusername_foreign" FOREIGN KEY("buyerUsername") REFERENCES "buyer"("buyerId");
 ALTER TABLE
     "review" ADD CONSTRAINT "review_productid_foreign" FOREIGN KEY("productID") REFERENCES "product"("productID");
+ALTER TABLE
+    "product" ADD CONSTRAINT "product_sellerid_foreign" FOREIGN KEY("sellerId") REFERENCES "seller"("sellerId");
+ALTER TABLE
+    "review" ADD CONSTRAINT "review_sellerusername_foreign" FOREIGN KEY("sellerUsername") REFERENCES "seller"("sellerId");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_colorid_foreign" FOREIGN KEY("colorID") REFERENCES "colors"("colorID");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_materialid_foreign" FOREIGN KEY("materialID") REFERENCES "materials"("materialID");
+ALTER TABLE
+    "order" ADD CONSTRAINT "order_buyerid_foreign" FOREIGN KEY("buyerId") REFERENCES "buyer"("buyerId");
 ALTER TABLE
     "order" ADD CONSTRAINT "order_statusid_foreign" FOREIGN KEY("statusID") REFERENCES "orderStatus"("statusID");
 ALTER TABLE
@@ -116,19 +122,3 @@ ALTER TABLE
     "productInOrder" ADD CONSTRAINT "productinorder_orderid_foreign" FOREIGN KEY("orderID") REFERENCES "order"("orderID");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_styleid_foreign" FOREIGN KEY("styleID") REFERENCES "styles"("styleID");
-
-	INSERT INTO [dbo].[user]
-           ([username]
-           ,[password]
-           ,[email]
-           ,[isAdmin]
-           ,[isSeller]
-           ,[isBuyer])
-     VALUES
-           ('yuli',
-		   '1234',
-		   'yuli@gmail.com',
-		   'true',
-		   'false',
-		   'false')
-GO	
