@@ -140,9 +140,7 @@ namespace StoreServer.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
-            //Check if user logged in and its ID is the same as the contact user ID
-            if (user != null)
-            {
+            
                 if (file == null)
                 {
                     return BadRequest();
@@ -164,8 +162,7 @@ namespace StoreServer.Controllers
                     Console.WriteLine(e.Message);
                     return BadRequest();
                 }
-            }
-            return Forbid();
+            
         }
         #endregion
     }

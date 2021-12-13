@@ -15,6 +15,6 @@ namespace StoreServerBL.Models
         public int MaterialId { get; set; }
         public string Material1 { get; set; }
 
-        public virtual List<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
