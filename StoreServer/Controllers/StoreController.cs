@@ -73,10 +73,10 @@ namespace StoreServer.Controllers
         [HttpPost]
         public Seller RegisterSeller([FromBody] Seller userSeller)
         {
+            bool addSeller = this.context.RegisterSeller(userSeller);
             //Check user name and password
-            if (userSeller != null)
+            if (addSeller)
             {
-                this.context.RegisterSeller(userSeller);
                 HttpContext.Session.SetObject("theUser", userSeller);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!

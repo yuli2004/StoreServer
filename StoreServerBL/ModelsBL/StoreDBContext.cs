@@ -35,16 +35,18 @@ namespace StoreServerBL.Models
         #endregion
 
         #region Register seller
-        public void RegisterSeller(Seller userSeller)
+        public bool RegisterSeller(Seller userSeller)
         {
             try
             {
                 this.Sellers.Add(userSeller);
                 this.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
         }
         #endregion
