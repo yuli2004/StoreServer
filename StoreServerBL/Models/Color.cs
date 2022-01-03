@@ -9,12 +9,12 @@ namespace StoreServerBL.Models
     {
         public Color()
         {
-            Products = new List<Product>();
+            Products = new HashSet<Product>();
         }
 
         public int ColorId { get; set; }
         public string Color1 { get; set; }
 
-        public virtual List<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

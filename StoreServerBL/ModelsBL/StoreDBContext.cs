@@ -66,5 +66,7 @@ namespace StoreServerBL.Models
             return Users.Any(u => u.Username == username);
         }
         #endregion
+
+        
     }
 }

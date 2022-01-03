@@ -18,7 +18,6 @@ namespace StoreServerBL.Models
         public int BuyerId { get; set; }
         public DateTime Date { get; set; }
 
-
         public virtual Buyer Buyer { get; set; }
         public virtual OrderStatus Status { get; set; }
         public virtual ICollection<ProductInOrder> ProductInOrders { get; set; }

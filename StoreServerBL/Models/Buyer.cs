@@ -9,15 +9,15 @@ namespace StoreServerBL.Models
     {
         public Buyer()
         {
-            Orders = new List<Order>();
-            Reviews = new List<Review>();
+            Orders = new HashSet<Order>();
+            Reviews = new HashSet<Review>();
         }
 
         public int BuyerId { get; set; }
         public string Username { get; set; }
 
         public virtual User UsernameNavigation { get; set; }
-        public virtual List<Order> Orders { get; set; }
-        public virtual List<Review> Reviews { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }
