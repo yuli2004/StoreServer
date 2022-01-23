@@ -165,6 +165,21 @@ namespace StoreServer.Controllers
             
         }
         #endregion
+
+        #region get lookups
+
+        [Route("GetLookups")]
+        [HttpGet]
+        public DTO.LookupTables GetLookups()
+        {
+            DTO.LookupTables tables = new DTO.LookupTables()
+            {
+                Colors = context.Colors.ToList(),
+
+            };
+            return tables;
+        }
+        #endregion
     }
 
 

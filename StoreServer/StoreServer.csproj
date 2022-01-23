@@ -12,8 +12,4 @@
     <ProjectReference Include="..\StoreServerBL\StoreServerBL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
-
 </Project>
