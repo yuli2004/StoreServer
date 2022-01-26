@@ -49,7 +49,8 @@ CREATE TABLE "product"(
     "materialID" INT NOT NULL,
     "colorID" INT NOT NULL,
     "styleID" INT NOT NULL,
-    "size" NVARCHAR(255) NOT NULL,
+    "height" INT NOT NULL,
+    "width" INT NOT NULL,
     "isActive" BIT NOT NULL
 );
 ALTER TABLE

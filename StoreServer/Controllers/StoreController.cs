@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using StoreServerBL.Models;
 using System.IO;
 
+
 namespace StoreServer.Controllers
 {
     [Route("StoreAPI")]
@@ -175,7 +176,8 @@ namespace StoreServer.Controllers
             DTO.LookupTables tables = new DTO.LookupTables()
             {
                 Colors = context.Colors.ToList(),
-
+                Materials = context.Materials.ToList(),
+                Styles = context.Styles.ToList()
             };
             return tables;
         }
