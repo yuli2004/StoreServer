@@ -182,6 +182,27 @@ namespace StoreServer.Controllers
             return tables;
         }
         #endregion
+
+        #region GetSearchResults
+
+        [Route("GetSearchResults")]
+        [HttpGet]
+        public List<Product> GetSearchResults([FromQuery] string query)
+        {
+            try
+            {
+                List<Product> returnList = context.SearchProducts(query);
+                return returnList;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                return new List<Product>();
+            }
+
+        }
+        #endregion
     }
 
 

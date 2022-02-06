@@ -67,6 +67,19 @@ namespace StoreServerBL.Models
         }
         #endregion
 
+        public List<Product> SearchProducts(string query)
+        {
+            List < Product > result = new List<Product>();
+            
+            foreach(Product p in Products)
+            {
+                string str = $"{p.ProductName}|{p.Details}";
+                if (string.IsNullOrEmpty(query) || str.Contains(query))
+                    result.Add(p);
+            }
+
+            return result;
+        }
         
     }
 }
