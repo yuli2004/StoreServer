@@ -20,10 +20,12 @@ namespace StoreServerBL.Models
         public string Details { get; set; }
         public DateTime AdvertisingDate { get; set; }
         public double Price { get; set; }
+        public string Size { get; set; }
         public int MaterialId { get; set; }
         public int ColorId { get; set; }
         public int StyleId { get; set; }
-        public string Size { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Color Color { get; set; }

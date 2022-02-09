@@ -49,7 +49,9 @@ namespace StoreServerBL.Models
                 entity.HasIndex(e => e.Username, "buyer_username_unique")
                     .IsUnique();
 
-                entity.Property(e => e.BuyerId).HasColumnName("buyerId");
+                entity.Property(e => e.BuyerId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("buyerId");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
@@ -67,7 +69,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("colors");
 
-                entity.Property(e => e.ColorId).HasColumnName("colorID");
+                entity.Property(e => e.ColorId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("colorID");
 
                 entity.Property(e => e.Color1)
                     .IsRequired()
@@ -79,7 +83,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("materials");
 
-                entity.Property(e => e.MaterialId).HasColumnName("materialID");
+                entity.Property(e => e.MaterialId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("materialID");
 
                 entity.Property(e => e.Material1)
                     .IsRequired()
@@ -91,7 +97,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("order");
 
-                entity.Property(e => e.OrderId).HasColumnName("orderID");
+                entity.Property(e => e.OrderId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("orderID");
 
                 entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
@@ -123,7 +131,9 @@ namespace StoreServerBL.Models
 
                 entity.ToTable("orderStatus");
 
-                entity.Property(e => e.StatusId).HasColumnName("statusID");
+                entity.Property(e => e.StatusId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("statusID");
 
                 entity.Property(e => e.Status)
                     .IsRequired()
@@ -135,7 +145,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("product");
 
-                entity.Property(e => e.ProductId).HasColumnName("productID");
+                entity.Property(e => e.ProductId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("productID");
 
                 entity.Property(e => e.AdvertisingDate)
                     .HasColumnType("date")
@@ -147,6 +159,8 @@ namespace StoreServerBL.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("details");
+
+                entity.Property(e => e.Height).HasColumnName("height");
 
                 entity.Property(e => e.IsActive).HasColumnName("isActive");
 
@@ -167,11 +181,12 @@ namespace StoreServerBL.Models
                 entity.Property(e => e.SellerId).HasColumnName("sellerId");
 
                 entity.Property(e => e.Size)
-                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("size");
 
                 entity.Property(e => e.StyleId).HasColumnName("styleID");
+
+                entity.Property(e => e.Width).HasColumnName("width");
 
                 entity.HasOne(d => d.Color)
                     .WithMany(p => p.Products)
@@ -202,7 +217,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("productInOrder");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.OrderId).HasColumnName("orderID");
 
@@ -225,7 +242,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("review");
 
-                entity.Property(e => e.ReviewId).HasColumnName("reviewID");
+                entity.Property(e => e.ReviewId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("reviewID");
 
                 entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
@@ -247,7 +266,7 @@ namespace StoreServerBL.Models
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_buyerid_foreign");
+                    .HasConstraintName("review_buyerId_foreign");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Reviews)
@@ -269,7 +288,9 @@ namespace StoreServerBL.Models
                 entity.HasIndex(e => e.Username, "seller_username_unique")
                     .IsUnique();
 
-                entity.Property(e => e.SellerId).HasColumnName("sellerId");
+                entity.Property(e => e.SellerId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("sellerId");
 
                 entity.Property(e => e.Info)
                     .IsRequired()
@@ -284,6 +305,7 @@ namespace StoreServerBL.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Picture)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("picture");
 
@@ -303,7 +325,9 @@ namespace StoreServerBL.Models
             {
                 entity.ToTable("styles");
 
-                entity.Property(e => e.StyleId).HasColumnName("styleID");
+                entity.Property(e => e.StyleId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("styleID");
 
                 entity.Property(e => e.Style1)
                     .IsRequired()

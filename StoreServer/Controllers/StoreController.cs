@@ -177,7 +177,8 @@ namespace StoreServer.Controllers
             {
                 Colors = context.Colors.ToList(),
                 Materials = context.Materials.ToList(),
-                Styles = context.Styles.ToList()
+                Styles = context.Styles.ToList(),
+                AllProducts = context.Products.ToList()
             };
             return tables;
         }

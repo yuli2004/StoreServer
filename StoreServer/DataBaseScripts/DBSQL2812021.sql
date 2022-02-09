@@ -46,6 +46,7 @@ CREATE TABLE "product"(
     "details" NVARCHAR(255) NOT NULL,
     "advertisingDate" DATE NOT NULL,
     "price" FLOAT NOT NULL,
+    "size" NVarchar(255),
     "materialID" INT NOT NULL,
     "colorID" INT NOT NULL,
     "styleID" INT NOT NULL,
@@ -131,3 +132,5 @@ ALTER TABLE
     "productInOrder" ADD CONSTRAINT "productinorder_orderid_foreign" FOREIGN KEY("orderID") REFERENCES "order"("orderID");
 ALTER TABLE
     "product" ADD CONSTRAINT "product_styleid_foreign" FOREIGN KEY("styleID") REFERENCES "styles"("styleID");
+
+   
