@@ -20,16 +20,17 @@ namespace StoreServerBL.Models
         public string Details { get; set; }
         public DateTime AdvertisingDate { get; set; }
         public double Price { get; set; }
-        public string Size { get; set; }
-        public int MaterialId { get; set; }
+        public int SMaterialId { get; set; }
         public int ColorId { get; set; }
         public int StyleId { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
         public bool IsActive { get; set; }
+        public int PMaterialId { get; set; }
 
         public virtual Color Color { get; set; }
-        public virtual Material Material { get; set; }
+        public virtual PaintMaterial PMaterial { get; set; }
+        public virtual SurfaceMaterial SMaterial { get; set; }
         public virtual Seller Seller { get; set; }
         public virtual Style Style { get; set; }
         public virtual ICollection<ProductInOrder> ProductInOrders { get; set; }

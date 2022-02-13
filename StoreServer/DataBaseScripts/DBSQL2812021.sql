@@ -51,8 +51,8 @@ CREATE TABLE "product"(
     "styleID" INT NOT NULL,
     "height" INT NOT NULL,
     "width" INT NOT NULL,
-    "isActive" BIT NOT NULL
-    "pMaterialID" INT NOT NULL,
+    "isActive" BIT NOT NULL,
+    "pMaterialID" INT NOT NULL
 );
 ALTER TABLE
     "product" ADD CONSTRAINT "product_productid_primary" PRIMARY KEY("productID");

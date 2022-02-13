@@ -176,7 +176,8 @@ namespace StoreServer.Controllers
             DTO.LookupTables tables = new DTO.LookupTables()
             {
                 Colors = context.Colors.ToList(),
-                Materials = context.Materials.ToList(),
+                SurfaceMaterials = context.SurfaceMaterials.ToList(),
+                PaintMaterials = context.PaintMaterials.ToList(),
                 Styles = context.Styles.ToList(),
                 AllProducts = context.Products.ToList()
             };
