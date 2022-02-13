@@ -19,7 +19,7 @@ ALTER TABLE
 CREATE UNIQUE INDEX "user_email_unique" ON
     "user"("email");
 CREATE TABLE "seller"(
-    "sellerId" INT NOT NULL,
+    "sellerId" INT IDENTITY(1,1) NOT NULL,
     "username" NVARCHAR(255) NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
     "info" NVARCHAR(255) NOT NULL,
@@ -31,7 +31,7 @@ ALTER TABLE
 CREATE UNIQUE INDEX "seller_username_unique" ON
     "seller"("username");
 CREATE TABLE "buyer"(
-    "buyerId" INT NOT NULL,
+    "buyerId" INT IDENTITY(1,1) NOT NULL,
     "username" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
@@ -39,25 +39,25 @@ ALTER TABLE
 CREATE UNIQUE INDEX "buyer_username_unique" ON
     "buyer"("username");
 CREATE TABLE "product"(
-    "productID" INT NOT NULL,
+    "productID" INT IDENTITY(1,1) NOT NULL,
     "sellerId" INT NOT NULL,
     "picture" NVARCHAR(255) NOT NULL,
     "productName" NVARCHAR(255) NOT NULL,
     "details" NVARCHAR(255) NOT NULL,
     "advertisingDate" DATE NOT NULL,
     "price" FLOAT NOT NULL,
-    "size" NVarchar(255),
-    "materialID" INT NOT NULL,
+    "sMaterialID" INT NOT NULL,
     "colorID" INT NOT NULL,
     "styleID" INT NOT NULL,
     "height" INT NOT NULL,
     "width" INT NOT NULL,
     "isActive" BIT NOT NULL
+    "pMaterialID" INT NOT NULL,
 );
 ALTER TABLE
     "product" ADD CONSTRAINT "product_productid_primary" PRIMARY KEY("productID");
 CREATE TABLE "review"(
-    "productID" INT NOT NULL,
+    "productID" INT IDENTITY(1,1) NOT NULL,
     "buyerId" INT NOT NULL,
     "text" NVARCHAR(255) NOT NULL,
     "sellerId" INT NOT NULL,
@@ -67,19 +67,27 @@ CREATE TABLE "review"(
 ALTER TABLE
     "review" ADD CONSTRAINT "review_reviewid_primary" PRIMARY KEY("reviewID");
 CREATE TABLE "colors"(
-    "colorID" INT NOT NULL,
+    "colorID" INT IDENTITY(1,1) NOT NULL,
     "color" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "colors" ADD CONSTRAINT "colors_colorid_primary" PRIMARY KEY("colorID");
-CREATE TABLE "materials"(
-    "materialID" INT NOT NULL,
-    "material" NVARCHAR(255) NOT NULL
+CREATE TABLE "surfaceMaterials"(
+    "sMaterialID" INT IDENTITY(1,1) NOT NULL,
+    "sMaterial" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
-    "materials" ADD CONSTRAINT "materials_materialid_primary" PRIMARY KEY("materialID");
+    "surfaceMaterials" ADD CONSTRAINT "surfaceMaterials_sMaterialid_primary" PRIMARY KEY("sMaterialID");
+
+CREATE TABLE "paintMaterials"(
+    "pMaterialID" INT IDENTITY(1,1) NOT NULL,
+    "pMaterial" NVARCHAR(255) NOT NULL
+);
+ALTER TABLE
+    "paintMaterials" ADD CONSTRAINT "paintMaterials_pMaterialid_primary" PRIMARY KEY("pMaterialID");
+
 CREATE TABLE "order"(
-    "orderID" INT NOT NULL,
+    "orderID" INT IDENTITY(1,1) NOT NULL,
     "statusID" INT NOT NULL,
     "totalPrice" FLOAT NOT NULL,
     "buyerId" INT NOT NULL,
@@ -88,7 +96,7 @@ CREATE TABLE "order"(
 ALTER TABLE
     "order" ADD CONSTRAINT "order_orderid_primary" PRIMARY KEY("orderID");
 CREATE TABLE "orderStatus"(
-    "statusID" INT NOT NULL,
+    "statusID" INT IDENTITY(1,1) NOT NULL,
     "status" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
@@ -96,12 +104,12 @@ ALTER TABLE
 CREATE TABLE "productInOrder"(
     "productID" INT NOT NULL,
     "orderID" INT NOT NULL,
-    "ID" INT NOT NULL
+    "ID" INT IDENTITY(1,1) NOT NULL
 );
 ALTER TABLE
     "productInOrder" ADD CONSTRAINT "productinorder_id_primary" PRIMARY KEY("ID");
 CREATE TABLE "styles"(
-    "styleID" INT NOT NULL,
+    "styleID" INT IDENTITY(1,1) NOT NULL,
     "style" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
@@ -121,7 +129,9 @@ ALTER TABLE
 ALTER TABLE
     "product" ADD CONSTRAINT "product_colorid_foreign" FOREIGN KEY("colorID") REFERENCES "colors"("colorID");
 ALTER TABLE
-    "product" ADD CONSTRAINT "product_materialid_foreign" FOREIGN KEY("materialID") REFERENCES "materials"("materialID");
+    "product" ADD CONSTRAINT "product_sMaterialid_foreign" FOREIGN KEY("sMaterialID") REFERENCES "surfaceMaterials"("sMaterialID");
+ALTER TABLE
+    "product" ADD CONSTRAINT "product_pMaterialid_foreign" FOREIGN KEY("pMaterialID") REFERENCES "paintMaterials"("pMaterialID");
 ALTER TABLE
     "order" ADD CONSTRAINT "order_buyerid_foreign" FOREIGN KEY("buyerId") REFERENCES "buyer"("buyerId");
 ALTER TABLE
