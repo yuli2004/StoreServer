@@ -299,7 +299,6 @@ namespace StoreServerBL.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Picture)
-                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("picture");
 

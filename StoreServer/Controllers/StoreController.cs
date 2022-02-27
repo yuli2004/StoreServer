@@ -155,6 +155,12 @@ namespace StoreServer.Controllers
                         await file.CopyToAsync(stream);
                     }
 
+                Seller seller=context.Sellers.Where(s => s.UsernameNavigation == user).FirstOrDefault();
+                if (seller != null)
+                {
+                    seller.Picture = file.FileName;
+                    context.SaveChanges();
+                }
 
                     return Ok(new { length = file.Length, name = file.FileName });
                 }

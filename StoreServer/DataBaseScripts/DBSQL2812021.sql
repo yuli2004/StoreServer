@@ -21,7 +21,7 @@ CREATE UNIQUE INDEX "user_email_unique" ON
 CREATE TABLE "seller"(
     "sellerId" INT IDENTITY(1,1) NOT NULL,
     "username" NVARCHAR(255) NOT NULL,
-    "picture" NVARCHAR(255) NOT NULL,
+    "picture" NVARCHAR(255) ,
     "info" NVARCHAR(255) NOT NULL,
     "name" NVARCHAR(255) NOT NULL,
     "isActive" BIT NOT NULL
