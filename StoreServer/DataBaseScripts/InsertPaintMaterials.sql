@@ -35,4 +35,9 @@ INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
      VALUES
            ('עפרון')
+
+INSERT INTO [dbo].[paintMaterials]
+           ([pMaterial])
+     VALUES
+           ('הדפס')
 GO

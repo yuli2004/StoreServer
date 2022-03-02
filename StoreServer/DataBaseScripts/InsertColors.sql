@@ -55,6 +55,16 @@ INSERT INTO [dbo].[colors]
            ([color])
      VALUES
            ('שחור')
+
+INSERT INTO [dbo].[colors]
+           ([color])
+     VALUES
+           ('צבעוני')
+
+INSERT INTO [dbo].[colors]
+           ([color])
+     VALUES
+           ('אחר')
 GO
 
 
