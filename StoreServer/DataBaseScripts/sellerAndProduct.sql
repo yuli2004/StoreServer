@@ -53,10 +53,39 @@ INSERT INTO [dbo].[product]
            ,'2022-03-02'
            ,'90'
            ,'2'
-           ,'11'
+           ,'12'
            ,'12'
            ,'45'
            ,'45'
            ,'1'
-           ,'7')
+           ,'8')
+GO
+INSERT INTO [dbo].[product]
+           ([sellerId]
+           ,[picture]
+           ,[productName]
+           ,[details]
+           ,[advertisingDate]
+           ,[price]
+           ,[sMaterialID]
+           ,[colorID]
+           ,[styleID]
+           ,[height]
+           ,[width]
+           ,[isActive]
+           ,[pMaterialID])
+     VALUES
+           ('2'
+           ,'PopPoster'
+           ,'פופ! פוסטר'
+           ,'פוסטר פופ ארט עם כיתוב פופ!'
+           ,'2022-03-06'
+           ,'50'
+           ,'2'
+           ,'12'
+           ,'12'
+           ,'45'
+           ,'45'
+           ,'1'
+           ,'8')
 GO
