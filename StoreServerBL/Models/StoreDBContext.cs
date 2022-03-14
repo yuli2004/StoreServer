@@ -20,7 +20,6 @@ namespace StoreServerBL.Models
         public virtual DbSet<Buyer> Buyers { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<PaintMaterial> PaintMaterials { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductInOrder> ProductInOrders { get; set; }
@@ -88,8 +87,6 @@ namespace StoreServerBL.Models
                     .HasColumnType("date")
                     .HasColumnName("date");
 
-                entity.Property(e => e.StatusId).HasColumnName("statusID");
-
                 entity.Property(e => e.TotalPrice).HasColumnName("totalPrice");
 
                 entity.HasOne(d => d.Buyer)
@@ -97,27 +94,6 @@ namespace StoreServerBL.Models
                     .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("order_buyerid_foreign");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("order_statusid_foreign");
-            });
-
-            modelBuilder.Entity<OrderStatus>(entity =>
-            {
-                entity.HasKey(e => e.StatusId)
-                    .HasName("orderstatus_statusid_primary");
-
-                entity.ToTable("orderStatus");
-
-                entity.Property(e => e.StatusId).HasColumnName("statusID");
-
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("status");
             });
 
             modelBuilder.Entity<PaintMaterial>(entity =>

@@ -88,19 +88,13 @@ ALTER TABLE
 
 CREATE TABLE "order"(
     "orderID" INT IDENTITY(1,1) NOT NULL,
-    "statusID" INT NOT NULL,
     "totalPrice" FLOAT NOT NULL,
     "buyerId" INT NOT NULL,
     "date" DATE NOT NULL
 );
 ALTER TABLE
     "order" ADD CONSTRAINT "order_orderid_primary" PRIMARY KEY("orderID");
-CREATE TABLE "orderStatus"(
-    "statusID" INT IDENTITY(1,1) NOT NULL,
-    "status" NVARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    "orderStatus" ADD CONSTRAINT "orderstatus_statusid_primary" PRIMARY KEY("statusID");
+
 CREATE TABLE "productInOrder"(
     "productID" INT NOT NULL,
     "orderID" INT NOT NULL,
@@ -134,8 +128,6 @@ ALTER TABLE
     "product" ADD CONSTRAINT "product_pMaterialid_foreign" FOREIGN KEY("pMaterialID") REFERENCES "paintMaterials"("pMaterialID");
 ALTER TABLE
     "order" ADD CONSTRAINT "order_buyerid_foreign" FOREIGN KEY("buyerId") REFERENCES "buyer"("buyerId");
-ALTER TABLE
-    "order" ADD CONSTRAINT "order_statusid_foreign" FOREIGN KEY("statusID") REFERENCES "orderStatus"("statusID");
 ALTER TABLE
     "productInOrder" ADD CONSTRAINT "productinorder_productid_foreign" FOREIGN KEY("productID") REFERENCES "product"("productID");
 ALTER TABLE
