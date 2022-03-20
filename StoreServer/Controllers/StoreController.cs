@@ -211,6 +211,32 @@ namespace StoreServer.Controllers
 
         }
         #endregion
+
+        [Route ("AddOrder")]
+        [HttpPost]
+
+        public bool AddOrder(Order o)
+        {
+            User u = HttpContext.Session.GetObject<User>("userLogin");
+            if(u!=null)
+            {
+               bool success= context.AddOrder(o);
+                if (success)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    context.UpdateProductStatus(o);
+                }
+                else
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                return success;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+
+        }
     }
 
 

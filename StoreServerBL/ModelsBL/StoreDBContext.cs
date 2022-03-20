@@ -15,7 +15,7 @@ namespace StoreServerBL.Models
         #region Log in
         public User LogIn(string userName, string pass)
         {
-            return this.Users.Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
+            return this.Users.Include(u=>u.Buyer).Include(u=>u.Seller).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
         #endregion
 
@@ -81,6 +81,27 @@ namespace StoreServerBL.Models
 
             return result;
         }
-        
+
+        public bool AddOrder(Order o)
+        {
+            Buyer buyer=this.Buyers.Where(b => b == o.Buyer).FirstOrDefault();
+            if (buyer == null)
+                return false;
+            buyer.Orders.Add(o);
+            SaveChanges();
+            return true;
+        }
+        public void UpdateProductStatus(Order o)
+        {
+           foreach(ProductInOrder p in o.ProductInOrders)
+            {
+                Product product = this.Products.Find(p.Product);
+                if(product!=null)
+                     product.IsActive = false;
+            }
+            SaveChanges();
+        }
+
+
     }
 }
