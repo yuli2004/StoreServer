@@ -57,6 +57,7 @@ namespace StoreServer.Controllers
             {
                 this.context.RegisterBuyer(userBuyer);
                 HttpContext.Session.SetObject("theUser", userBuyer);
+                HttpContext.Session.SetObject("userLogin", userBuyer.UsernameNavigation);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
                 return userBuyer;
@@ -78,6 +79,7 @@ namespace StoreServer.Controllers
             //Check user name and password
             if (addSeller)
             {
+                HttpContext.Session.SetObject("userLogin", userSeller.UsernameNavigation);
                 HttpContext.Session.SetObject("theUser", userSeller);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
@@ -185,7 +187,8 @@ namespace StoreServer.Controllers
                 SurfaceMaterials = context.SurfaceMaterials.ToList(),
                 PaintMaterials = context.PaintMaterials.ToList(),
                 Styles = context.Styles.ToList(),
-                AllProducts = context.SearchProducts(string.Empty)
+                AllProducts = context.SearchProducts(string.Empty),
+                
             };
             return tables;
         }
@@ -212,6 +215,7 @@ namespace StoreServer.Controllers
         }
         #endregion
 
+        #region Place order
         [Route ("AddOrder")]
         [HttpPost]
 
@@ -237,6 +241,7 @@ namespace StoreServer.Controllers
             }
 
         }
+        #endregion
     }
 
 

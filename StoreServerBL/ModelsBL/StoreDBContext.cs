@@ -84,10 +84,13 @@ namespace StoreServerBL.Models
 
         public bool AddOrder(Order o)
         {
-            Buyer buyer=this.Buyers.Where(b => b == o.Buyer).FirstOrDefault();
-            if (buyer == null)
-                return false;
-            buyer.Orders.Add(o);
+
+            this.Orders.Update(o);
+            
+            //Buyer buyer=this.Buyers.Include(b=>b.UsernameNavigation).Where(b => b == o.Buyer).FirstOrDefault();
+            //if (buyer == null)
+            //    return false;
+            //buyer.Orders.Add(o);
             SaveChanges();
             return true;
         }
@@ -95,7 +98,7 @@ namespace StoreServerBL.Models
         {
            foreach(ProductInOrder p in o.ProductInOrders)
             {
-                Product product = this.Products.Find(p.Product);
+                Product product = p.Product;
                 if(product!=null)
                      product.IsActive = false;
             }

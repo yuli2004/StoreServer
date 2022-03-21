@@ -8,7 +8,7 @@ INSERT INTO [dbo].[seller]
            ,[name]
            ,[isActive])
      VALUES
-           ('פופ ארט פרינטס'
+           ('PopArtPrints'
            ,'userProfile'
            ,'היי, אני רומי ואני אוהבת אומנות'
            ,'רומי גבע'
@@ -23,8 +23,8 @@ INSERT INTO [dbo].[user]
            ,[isSeller]
            ,[isBuyer])
      VALUES
-           ('פופ ארט פרינטס'
-           ,'רומי123'
+           ('PopArtPrints'
+           ,'12345678'
            ,'romigeva@gmail.com'
            ,'0'
            ,'1'

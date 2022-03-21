@@ -13,5 +13,7 @@ namespace StoreServer.DTO
         public List<PaintMaterial> PaintMaterials { get; set; }
         public List<Style> Styles { get; set; }
         public  List<Product> AllProducts { get; set; }
+
+        
     }
 }
