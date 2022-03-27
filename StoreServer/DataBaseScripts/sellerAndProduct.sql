@@ -89,3 +89,63 @@ INSERT INTO [dbo].[product]
            ,'1'
            ,'8')
 GO
+
+INSERT INTO [dbo].[seller]
+           ([username]
+           ,[picture]
+           ,[info]
+           ,[name]
+           ,[isActive])
+     VALUES
+           ('LandScapes'
+           ,'manProfil'
+           ,'היי, אני גדי, אני אוהב לצאת לטיולים ולצייר נופים שאני רואה. מוזמנים להתרשם מהיצירות שלי'
+           ,'גדי שרון'
+           ,'1')
+GO
+
+INSERT INTO [dbo].[user]
+           ([username]
+           ,[password]
+           ,[email]
+           ,[isAdmin]
+           ,[isSeller]
+           ,[isBuyer])
+     VALUES
+           ('LandScapes'
+           ,'12345678'
+           ,'gadisharon@gmail.com'
+           ,'0'
+           ,'1'
+           ,'0')
+GO
+
+INSERT INTO [dbo].[product]
+           ([sellerId]
+           ,[picture]
+           ,[productName]
+           ,[details]
+           ,[advertisingDate]
+           ,[price]
+           ,[sMaterialID]
+           ,[colorID]
+           ,[styleID]
+           ,[height]
+           ,[width]
+           ,[isActive]
+           ,[pMaterialID])
+     VALUES
+           ('3'
+           ,'sunsets'
+           ,'שקיעה ים תיכונית'
+           ,'ציור ריאליסטי אשר ציירתי על גדת חוף הים כאשר ביקרתי בקפריסין בחופשה '
+           ,'2022-03-27'
+           ,'350'
+           ,'1'
+           ,'5'
+           ,'11'
+           ,'40'
+           ,'60'
+           ,'1'
+           ,'2')
+GO
