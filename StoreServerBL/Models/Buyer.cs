@@ -10,7 +10,6 @@ namespace StoreServerBL.Models
         public Buyer()
         {
             Orders = new HashSet<Order>();
-            Reviews = new HashSet<Review>();
         }
 
         public int BuyerId { get; set; }
@@ -18,6 +17,5 @@ namespace StoreServerBL.Models
 
         public virtual User UsernameNavigation { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

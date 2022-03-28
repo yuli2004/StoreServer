@@ -23,7 +23,6 @@ namespace StoreServerBL.Models
         public virtual DbSet<PaintMaterial> PaintMaterials { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductInOrder> ProductInOrders { get; set; }
-        public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Seller> Sellers { get; set; }
         public virtual DbSet<Style> Styles { get; set; }
         public virtual DbSet<SurfaceMaterial> SurfaceMaterials { get; set; }
@@ -208,51 +207,6 @@ namespace StoreServerBL.Models
                     .HasConstraintName("productinorder_productid_foreign");
             });
 
-            modelBuilder.Entity<Review>(entity =>
-            {
-                entity.ToTable("review");
-
-                entity.Property(e => e.ReviewId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("reviewID");
-
-                entity.Property(e => e.BuyerId).HasColumnName("buyerId");
-
-                entity.Property(e => e.Picture)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("picture");
-
-                entity.Property(e => e.ProductId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("productID");
-
-                entity.Property(e => e.SellerId).HasColumnName("sellerId");
-
-                entity.Property(e => e.Text)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("text");
-
-                entity.HasOne(d => d.Buyer)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.BuyerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_buyerId_foreign");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_productid_foreign");
-
-                entity.HasOne(d => d.Seller)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.SellerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("review_sellerid_foreign");
-            });
-
             modelBuilder.Entity<Seller>(entity =>
             {
                 entity.ToTable("seller");
@@ -335,8 +289,6 @@ namespace StoreServerBL.Models
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("email");
-
-                entity.Property(e => e.IsAdmin).HasColumnName("isAdmin");
 
                 entity.Property(e => e.IsBuyer).HasColumnName("isBuyer");
 

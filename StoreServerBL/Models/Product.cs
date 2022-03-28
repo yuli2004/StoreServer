@@ -10,7 +10,6 @@ namespace StoreServerBL.Models
         public Product()
         {
             ProductInOrders = new HashSet<ProductInOrder>();
-            Reviews = new HashSet<Review>();
         }
 
         public int ProductId { get; set; }
@@ -34,6 +33,5 @@ namespace StoreServerBL.Models
         public virtual Seller Seller { get; set; }
         public virtual Style Style { get; set; }
         public virtual ICollection<ProductInOrder> ProductInOrders { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

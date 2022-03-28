@@ -46,7 +46,7 @@ INSERT INTO [dbo].[product]
            ,[isActive]
            ,[pMaterialID])
      VALUES
-           ('2'
+           ('4'
            ,'MarilynMonroePopArt'
            ,'מרילין מונרו פוסטר'
            ,'פוסטר בסגנון פופ ארט של האייקון ההוליוודי מרילין מונרו'
@@ -75,7 +75,7 @@ INSERT INTO [dbo].[product]
            ,[isActive]
            ,[pMaterialID])
      VALUES
-           ('2'
+           ('4'
            ,'PopPoster'
            ,'פופ! פוסטר'
            ,'פוסטר פופ ארט עם כיתוב פופ!'

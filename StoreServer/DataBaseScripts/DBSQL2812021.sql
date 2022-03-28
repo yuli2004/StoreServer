@@ -10,7 +10,6 @@ CREATE TABLE "user"(
     "username" NVARCHAR(255) NOT NULL,
     "password" NVARCHAR(255) NOT NULL,
     "email" NVARCHAR(255) NOT NULL,
-    "isAdmin" BIT NOT NULL,
     "isSeller" BIT NOT NULL,
     "isBuyer" BIT NOT NULL
 );
@@ -56,16 +55,7 @@ CREATE TABLE "product"(
 );
 ALTER TABLE
     "product" ADD CONSTRAINT "product_productid_primary" PRIMARY KEY("productID");
-CREATE TABLE "review"(
-    "productID" INT IDENTITY(1,1) NOT NULL,
-    "buyerId" INT NOT NULL,
-    "text" NVARCHAR(255) NOT NULL,
-    "sellerId" INT NOT NULL,
-    "picture" NVARCHAR(255) NOT NULL,
-    "reviewID" INT NOT NULL
-);
-ALTER TABLE
-    "review" ADD CONSTRAINT "review_reviewid_primary" PRIMARY KEY("reviewID");
+
 CREATE TABLE "colors"(
     "colorID" INT IDENTITY(1,1) NOT NULL,
     "color" NVARCHAR(255) NOT NULL
@@ -112,14 +102,11 @@ ALTER TABLE
     "seller" ADD CONSTRAINT "seller_username_foreign" FOREIGN KEY("username") REFERENCES "user"("username");
 ALTER TABLE
     "buyer" ADD CONSTRAINT "buyer_username_foreign" FOREIGN KEY("username") REFERENCES "user"("username");
-ALTER TABLE
-    "review" ADD CONSTRAINT "review_buyerId_foreign" FOREIGN KEY("buyerId") REFERENCES "buyer"("buyerId");
-ALTER TABLE
-    "review" ADD CONSTRAINT "review_productid_foreign" FOREIGN KEY("productID") REFERENCES "product"("productID");
+
+
 ALTER TABLE
     "product" ADD CONSTRAINT "product_sellerid_foreign" FOREIGN KEY("sellerId") REFERENCES "seller"("sellerId");
-ALTER TABLE
-    "review" ADD CONSTRAINT "review_sellerid_foreign" FOREIGN KEY("sellerId") REFERENCES "seller"("sellerId");
+
 ALTER TABLE
     "product" ADD CONSTRAINT "product_colorid_foreign" FOREIGN KEY("colorID") REFERENCES "colors"("colorID");
 ALTER TABLE
