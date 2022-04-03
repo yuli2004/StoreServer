@@ -15,7 +15,7 @@ namespace StoreServerBL.Models
         #region Log in
         public User LogIn(string userName, string pass)
         {
-            return this.Users.Include(u=>u.Buyer).Include(u=>u.Seller).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
+            return this.Users.Include(u=>u.Buyer.Orders).ThenInclude(o=>o.ProductInOrders).ThenInclude(p=>p.Product.Style).Include(u=>u.Seller.Products).ThenInclude(p=>p.ProductInOrders).ThenInclude(pp=>pp.Order).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
         #endregion
 
@@ -67,6 +67,7 @@ namespace StoreServerBL.Models
         }
         #endregion
 
+        #region Search product
         public List<Product> SearchProducts(string query)
         {
             
@@ -81,6 +82,9 @@ namespace StoreServerBL.Models
 
             return result;
         }
+        #endregion
+
+        #region add order
 
         public bool AddOrder(Order o)
         {
@@ -94,6 +98,9 @@ namespace StoreServerBL.Models
             SaveChanges();
             return true;
         }
+        #endregion
+
+        #region Update Product Status
         public void UpdateProductStatus(Order o)
         {
            foreach(ProductInOrder p in o.ProductInOrders)
@@ -104,7 +111,9 @@ namespace StoreServerBL.Models
             }
             SaveChanges();
         }
+        #endregion
 
+        
 
     }
 }
