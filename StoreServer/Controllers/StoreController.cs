@@ -188,8 +188,8 @@ namespace StoreServer.Controllers
                 PaintMaterials = context.PaintMaterials.ToList(),
                 Styles = context.Styles.ToList(),
                 AllProducts = context.SearchProducts(string.Empty),
-                
-            };
+                SoldProducts = new List<ProductInOrder>()
+    };
             return tables;
         }
         #endregion
@@ -224,15 +224,28 @@ namespace StoreServer.Controllers
             User u = HttpContext.Session.GetObject<User>("userLogin");
             if(u!=null)
             {
-               bool success= context.AddOrder(o);
-                if (success)
+                //bool success= context.AddOrder(o);
+
+                //if (success)
+                //{
+                foreach (ProductInOrder p in o.ProductInOrders)
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    context.UpdateProductStatus(o);
+                    p.Product.IsActive = false;
                 }
-                else
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                return success;
+                context.Entry(o).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                foreach (ProductInOrder p in o.ProductInOrders)
+                {
+                    context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                }
+                context.SaveChanges();
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //context.UpdateProductStatus(o);
+                //}
+                //else
+                //    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                //return success;
+                
+                return true;
             }
             else
             {

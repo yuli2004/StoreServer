@@ -89,31 +89,31 @@ namespace StoreServerBL.Models
         public bool AddOrder(Order o)
         {
 
-            this.Orders.Update(o);
+            //context.Orders.Update(o);
             
             //Buyer buyer=this.Buyers.Include(b=>b.UsernameNavigation).Where(b => b == o.Buyer).FirstOrDefault();
             //if (buyer == null)
             //    return false;
             //buyer.Orders.Add(o);
+
             SaveChanges();
             return true;
         }
         #endregion
 
         #region Update Product Status
-        public void UpdateProductStatus(Order o)
-        {
-           foreach(ProductInOrder p in o.ProductInOrders)
-            {
-                Product product = p.Product;
-                if(product!=null)
-                     product.IsActive = false;
-            }
-            SaveChanges();
-        }
+        //public void UpdateProductStatus(Order o)
+        //{
+        //   foreach(ProductInOrder p in o.ProductInOrders)
+        //    {
+        //        Product product = p.Product;
+        //        if(product!=null)
+        //             product.IsActive = false;
+        //    }
+        //    SaveChanges();
+        //}
         #endregion
 
         
-
     }
 }

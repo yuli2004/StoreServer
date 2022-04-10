@@ -4,8 +4,6 @@ GO
 USE StoreDB
 GO
 
-
-
 CREATE TABLE "user"(
     "username" NVARCHAR(255) NOT NULL,
     "password" NVARCHAR(255) NOT NULL,

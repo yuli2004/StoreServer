@@ -145,3 +145,4 @@ INSERT INTO [dbo].[product]
            ,'1'
            ,'2')
 GO
+
