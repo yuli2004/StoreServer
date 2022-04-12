@@ -230,14 +230,16 @@ namespace StoreServer.Controllers
                 //{
                 foreach (ProductInOrder p in o.ProductInOrders)
                 {
-                    p.Product.IsActive = false;
+                    Product product = context.Products.Find(p.Product.ProductId);
+                   product.IsActive = false;
                 }
                 context.Entry(o).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 foreach (ProductInOrder p in o.ProductInOrders)
                 {
-                    context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                  
                 }
-                context.SaveChanges();
+                    context.SaveChanges();
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 //context.UpdateProductStatus(o);
                 //}
