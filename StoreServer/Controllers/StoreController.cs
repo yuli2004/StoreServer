@@ -188,8 +188,8 @@ namespace StoreServer.Controllers
                 PaintMaterials = context.PaintMaterials.ToList(),
                 Styles = context.Styles.ToList(),
                 AllProducts = context.SearchProducts(string.Empty),
-                SoldProducts = new List<ProductInOrder>()
-    };
+                SoldProducts = context.GetSoldProducts()
+            };
             return tables;
         }
         #endregion
@@ -224,29 +224,21 @@ namespace StoreServer.Controllers
             User u = HttpContext.Session.GetObject<User>("userLogin");
             if(u!=null)
             {
-                //bool success= context.AddOrder(o);
-
-                //if (success)
-                //{
+                
                 foreach (ProductInOrder p in o.ProductInOrders)
                 {
                     Product product = context.Products.Find(p.Product.ProductId);
-                   product.IsActive = false;
+                    product.IsActive = false;
                 }
                 context.Entry(o).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 foreach (ProductInOrder p in o.ProductInOrders)
                 {
                     context.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-                  
+                    
                 }
-                    context.SaveChanges();
+                context.SaveChanges();
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                //context.UpdateProductStatus(o);
-                //}
-                //else
-                //    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                //return success;
-                
+
                 return true;
             }
             else
@@ -257,8 +249,28 @@ namespace StoreServer.Controllers
 
         }
         #endregion
- 
-    }
 
+        #region upload product
+        [Route("UploadProduct")]
+        [HttpPost]
+        public Product UploadProduct([FromBody] Product pr)
+        {
+            bool addProduct = this.context.UploadProduct(pr);
+            //Check user name and password
+            if (addProduct)
+            {                
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return pr;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        #endregion
+
+    }
 
 }

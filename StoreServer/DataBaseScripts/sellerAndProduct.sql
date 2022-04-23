@@ -144,5 +144,6 @@ INSERT INTO [dbo].[product]
            ,'60'
            ,'1'
            ,'2')
+
 GO
 

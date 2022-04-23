@@ -15,7 +15,8 @@ namespace StoreServerBL.Models
         #region Log in
         public User LogIn(string userName, string pass)
         {
-            return this.Users.Include(u=>u.Buyer.Orders).ThenInclude(o=>o.ProductInOrders).ThenInclude(p=>p.Product.Style).Include(u=>u.Seller.Products).ThenInclude(p=>p.ProductInOrders).ThenInclude(pp=>pp.Order).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
+            return this.Users.Include(u=>u.Buyer.Orders).ThenInclude(o=>o.ProductInOrders).ThenInclude(p=>p.Product)
+                .Include(u=>u.Seller.Products).ThenInclude(p=>p.ProductInOrders).ThenInclude(pp=>pp.Order).ThenInclude(ppp=>ppp.Buyer ).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
         #endregion
 
@@ -84,13 +85,25 @@ namespace StoreServerBL.Models
         }
         #endregion
 
-        #region add order
-
-        public bool AddOrder(Order o)
+        #region get sold products
+        public List<ProductInOrder> GetSoldProducts()
         {
 
-            //context.Orders.Update(o);
-            
+            List<ProductInOrder> result = new List<ProductInOrder>();
+            List<Order> allOrders = this.Orders.Include(p => p.ProductInOrders).Include(q => q.Buyer).ToList();
+            foreach (Order o in allOrders)
+            {
+                foreach (ProductInOrder p in o.ProductInOrders)
+                    result.Add(p);
+            }
+            return result;
+        }
+        #endregion
+
+        #region add order
+        public bool AddOrder(Order o)
+        {
+            //context.Orders.Update(o);            
             //Buyer buyer=this.Buyers.Include(b=>b.UsernameNavigation).Where(b => b == o.Buyer).FirstOrDefault();
             //if (buyer == null)
             //    return false;
@@ -114,6 +127,21 @@ namespace StoreServerBL.Models
         //}
         #endregion
 
-        
+        #region upload product
+        public bool UploadProduct(Product pr)
+        {
+            try
+            {
+                this.Products.Add(pr);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
