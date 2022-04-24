@@ -132,7 +132,7 @@ namespace StoreServerBL.Models
         {
             try
             {
-                this.Products.Add(pr);
+                this.Products.Update(pr);
                 this.SaveChanges();
                 return true;
             }

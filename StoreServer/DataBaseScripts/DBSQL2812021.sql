@@ -38,7 +38,7 @@ CREATE UNIQUE INDEX "buyer_username_unique" ON
 CREATE TABLE "product"(
     "productID" INT IDENTITY(1,1) NOT NULL,
     "sellerId" INT NOT NULL,
-    "picture" NVARCHAR(255) NOT NULL,
+    "picture" NVARCHAR(255),
     "productName" NVARCHAR(255) NOT NULL,
     "details" NVARCHAR(255) NOT NULL,
     "advertisingDate" DATE NOT NULL,
