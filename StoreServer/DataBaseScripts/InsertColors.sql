@@ -73,70 +73,67 @@ INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
      VALUES
            ('אקריליק')
-
-INSERT INTO [dbo].[paintMaterials]
-           ([pMaterial])
-     VALUES
-           ('צבעי שמן')
-
-INSERT INTO [dbo].[paintMaterials]
-           ([pMaterial])
-     VALUES
-           ('צבעי פסטל')
-
-INSERT INTO [dbo].[paintMaterials]
-           ([pMaterial])
-     VALUES
-           ('צבעי מים')
-
 INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
      VALUES
            ('גואש')
-
 INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
-     VALUES
-           ('פחם')
-
+    VALUES
+           ('הדפס')
+GO
 INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
      VALUES
            ('עפרון')
-
 INSERT INTO [dbo].[paintMaterials]
            ([pMaterial])
      VALUES
-           ('הדפס')
-GO
-USE [StoreDB]
+           ('פחם')
+INSERT INTO [dbo].[paintMaterials]
+           ([pMaterial])
+     VALUES
+           ('צבעי מים')
+INSERT INTO [dbo].[paintMaterials]
+           ([pMaterial])
+     VALUES
+           ('צבעי פסטל')
+INSERT INTO [dbo].[paintMaterials]
+           ([pMaterial])
+     VALUES
+           ('צבעי שמן')
+INSERT INTO [dbo].[paintMaterials]
+           ([pMaterial])
+     VALUES
+           ('אחר')
 GO
 
+USE [StoreDB]
+GO
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
            ('אבסטרקטי')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
-           ('מודרני')
-
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
            ('אימפרסיוניזם')
-
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
-           ('פוסט אימפרסיוניזם')
-
+           ('אקספרסיוניזם')
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
-           ('קוביזם')
-
+           ('גותי')
+INSERT INTO [dbo].[styles]
+           ([style])
+     VALUES
+           ('מודרני')
+INSERT INTO [dbo].[styles]
+           ([style])
+     VALUES
+           ('נאו-גאו')
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
@@ -146,17 +143,23 @@ INSERT INTO [dbo].[styles]
            ([style])
      VALUES
            ('עכשווי')
+INSERT INTO [dbo].[styles]
+           ([style])
+     VALUES
+           ('פוביזם')
+INSERT INTO [dbo].[styles]
+           ([style])
+     VALUES
+           ('פוסט אימפרסיוניזם')
+INSERT INTO [dbo].[styles]
+           ([style])
+     VALUES
+           ('פופ ארט')
 
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
-           ('גותי')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
-           ('רנסאנס')
-
+           ('קוביזם')
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
@@ -166,26 +169,10 @@ INSERT INTO [dbo].[styles]
            ([style])
      VALUES
            ('ריאליזם')
-
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
-           ('פופ ארט')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
-           ('אקספרסיוניזם')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
-           ('פוביזם')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
-           ('נאו-גאו')
+           ('רנסאנס')
 GO
 USE [StoreDB]
 GO
@@ -193,31 +180,26 @@ GO
 INSERT INTO [dbo].[surfaceMaterials]
            ([sMaterial])
      VALUES
-           ('קנבס')
-
-INSERT INTO [dbo].[surfaceMaterials]
-           ([sMaterial])
-     VALUES
-           ('נייר')
-
-INSERT INTO [dbo].[surfaceMaterials]
-           ([sMaterial])
-     VALUES
-           ('עץ')
-
+           ('בד')
 INSERT INTO [dbo].[surfaceMaterials]
            ([sMaterial])
      VALUES
            ('זכוכית')
-
 INSERT INTO [dbo].[surfaceMaterials]
            ([sMaterial])
      VALUES
            ('מתכת')
-
 INSERT INTO [dbo].[surfaceMaterials]
            ([sMaterial])
      VALUES
-           ('בד')
+           ('נייר')
+INSERT INTO [dbo].[surfaceMaterials]
+           ([sMaterial])
+     VALUES
+           ('עץ')
+INSERT INTO [dbo].[surfaceMaterials]
+           ([sMaterial])
+     VALUES
+           ('קנבס')
 GO
 
