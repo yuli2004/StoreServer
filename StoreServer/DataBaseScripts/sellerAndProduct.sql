@@ -8,7 +8,7 @@ INSERT INTO [dbo].[user]
            ,[isSeller]
            ,[isBuyer])
      VALUES
-           ('פופ ארט שופ'
+           ('PopArtPrints'
            ,'12345678'
            ,'romigeva@gmail.com'
            ,'1'
@@ -21,7 +21,7 @@ INSERT INTO [dbo].[seller]
            ,[name]
            ,[isActive])
      VALUES
-           ('פופ ארט שופ'
+           ('PopArtPrints'
            ,'userProfile'
            ,'היי אני רומי, יש לי תואר בתולדות האומנות ממכללת שנקר ואני עובדת כגרפיקאית. אני אוהבת בייחוד פופ ארט ומוכרת כאן הדפסים שאספתי.'
            ,'רומי גבע'
@@ -131,7 +131,7 @@ INSERT INTO [dbo].[product]
            ,[pMaterialID])
      VALUES
            ('1'
-           ,'soups'
+           ,'girl'
            ,'אישה מודרנית'
            ,'ציור אקריליק שציירתי המציג את סטריאוטיפ האישה המודרנית דרך העיניים שלי'
            ,'2022-04-13'
@@ -152,7 +152,7 @@ INSERT INTO [dbo].[user]
            ,[isSeller]
            ,[isBuyer])
      VALUES
-           ('נוף טיולים'
+           ('Landscapes'
            ,'12345678'
            ,'gadisharon@gmail.com'
            ,'1'
@@ -165,7 +165,7 @@ INSERT INTO [dbo].[seller]
            ,[name]
            ,[isActive])
      VALUES
-           ('נוף טיולים'
+           ('Landscapes'
            ,'manProfil'
            ,'היי, אני גדי, אני גמלאי שאוהב לצאת לטיולים ולצייר נופים שאני רואה. מוזמנים להתרשם מהיצירות שלי'
            ,'גדי שרון'
@@ -217,7 +217,7 @@ INSERT INTO [dbo].[product]
            ,[pMaterialID])
      VALUES
            ('2'
-           ,'greenField'
+           ,'sunsets'
            ,'שקיעה ים תיכונית'
            ,'ציור ריאליסטי בצבעי שמן שציירתי בקפריסין בחופשה עם אשתי.'
            ,'2022-04-23'
@@ -302,9 +302,9 @@ INSERT INTO [dbo].[product]
            ,[pMaterialID])
      VALUES
            ('3'
-           ,'abstracrCity'
+           ,'AbstractCity'
            ,'עיר'
-           ,'ציור אבסטרטי שלי. מוזמנים לפרש אותו איך שאתם רוצים. '
+           ,'ציור אבסטרקטי שלי. מוזמנים לפרש אותו איך שאתם רוצים. '
            ,'2022-03-27'
            ,'220'
            ,'5'
