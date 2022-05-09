@@ -163,11 +163,6 @@ INSERT INTO [dbo].[styles]
 INSERT INTO [dbo].[styles]
            ([style])
      VALUES
-           ('קוביזם')
-
-INSERT INTO [dbo].[styles]
-           ([style])
-     VALUES
            ('ריאליזם')
 INSERT INTO [dbo].[styles]
            ([style])
