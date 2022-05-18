@@ -267,7 +267,7 @@ INSERT INTO [dbo].[user]
            ,[isSeller]
            ,[isBuyer])
      VALUES
-           ('אבסטרקטיזם'
+           ('Abstractism'
            ,'12345678'
            ,'mayagill@gmail.com'
            ,'1'
@@ -280,7 +280,7 @@ INSERT INTO [dbo].[seller]
            ,[name]
            ,[isActive])
      VALUES
-           ('אבסטרקטיזם'
+           ('Abstractism'
            ,'artStudent'
            ,'היי אני מאיה, אני תלמידת תיכון ואוהבת לצייר בזמני הפנוי. כבר אין לי מקום בחדר לעבודות שלי אז אני מוכרת אותן... אשמח אם תעיפו מבט עליהן'
            ,'מאיה גיל'
