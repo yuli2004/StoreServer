@@ -255,6 +255,7 @@ namespace StoreServer.Controllers
         [HttpPost]
         public Product UploadProduct([FromBody] Product pr)
         {
+           
             bool addProduct = this.context.UploadProduct(pr);
             //Check user name and password
             if (addProduct)
