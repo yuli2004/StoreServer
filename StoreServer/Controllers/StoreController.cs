@@ -187,8 +187,9 @@ namespace StoreServer.Controllers
                 SurfaceMaterials = context.SurfaceMaterials.ToList(),
                 PaintMaterials = context.PaintMaterials.ToList(),
                 Styles = context.Styles.ToList(),
-                AllProducts = context.SearchProducts(string.Empty),
-                SoldProducts = context.GetSoldProducts()
+                AllProducts = new List<Product>()
+              //  AllProducts = context.SearchProducts(string.Empty)
+                //SoldProducts = context.GetSoldProducts()
             };
             return tables;
         }

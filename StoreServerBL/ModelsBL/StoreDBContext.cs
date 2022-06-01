@@ -73,8 +73,8 @@ namespace StoreServerBL.Models
         {
             
             List < Product > result = new List<Product>();
-            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).ToList();
-            foreach(Product p in allProducts)
+            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Where(p => p.IsActive == true).ToList();
+            foreach (Product p in allProducts)
             {
                 string str = $"{p.ProductName}|{p.Details}";
                 if (string.IsNullOrEmpty(query) || str.Contains(query))
