@@ -73,7 +73,8 @@ namespace StoreServerBL.Models
         {
             
             List < Product > result = new List<Product>();
-            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Where(p => p.IsActive == true).ToList();
+            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Include(c=>c.Color).Include(s => s.Style).Include(pm=>pm.PMaterial).Include(sm=>sm.SMaterial)
+                .Where(p => p.IsActive == true).ToList();
             foreach (Product p in allProducts)
             {
                 string str = $"{p.ProductName}|{p.Details}";
