@@ -87,17 +87,12 @@ namespace StoreServerBL.Models
         #endregion
 
         #region get sold products
-        public List<ProductInOrder> GetSoldProducts()
+        public List<Product> GetSoldProducts()
         {
+            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Include(c => c.Color).Include(s => s.Style).Include(pm => pm.PMaterial).Include(sm => sm.SMaterial)
+                .Where(p => p.IsActive == false).ToList();
 
-            List<ProductInOrder> result = new List<ProductInOrder>();
-            List<Order> allOrders = this.Orders.Include(p => p.ProductInOrders).Include(q => q.Buyer).ToList();
-            foreach (Order o in allOrders)
-            {
-                foreach (ProductInOrder p in o.ProductInOrders)
-                    result.Add(p);
-            }
-            return result;
+            return allProducts;
         }
         #endregion
 

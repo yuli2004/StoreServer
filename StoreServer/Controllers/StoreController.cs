@@ -189,7 +189,8 @@ namespace StoreServer.Controllers
                 Styles = context.Styles.ToList(),
                 AllProducts = new List<Product>(),
                 //AllProducts = context.SearchProducts(string.Empty)
-                SoldProducts = context.GetSoldProducts()
+                //SoldProducts = context.GetSoldProducts()
+                SoldProducts = new List<Product>()
             };
             return tables;
         }
@@ -207,6 +208,27 @@ namespace StoreServer.Controllers
                 return returnList;
             }
             catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                return new List<Product>();
+            }
+
+        }
+        #endregion
+
+        #region GetSoldProducts
+
+        [Route("GetSoldProducts")]
+        [HttpGet]
+        public List<Product> GetSoldProducts()
+        {
+            try
+            {
+                List<Product> returnList = context.GetSoldProducts();
+                return returnList;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
