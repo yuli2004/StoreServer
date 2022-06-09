@@ -190,7 +190,7 @@ namespace StoreServer.Controllers
                 AllProducts = new List<Product>(),
                 //AllProducts = context.SearchProducts(string.Empty)
                 //SoldProducts = context.GetSoldProducts()
-                SoldProducts = new List<Product>()
+                SoldProducts = new List<ProductInOrder>()
             };
             return tables;
         }
@@ -205,6 +205,7 @@ namespace StoreServer.Controllers
             try
             {
                 List<Product> returnList = context.SearchProducts(query);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 return returnList;
             }
             catch(Exception e)
@@ -221,18 +222,18 @@ namespace StoreServer.Controllers
 
         [Route("GetSoldProducts")]
         [HttpGet]
-        public List<Product> GetSoldProducts()
+        public List<ProductInOrder> GetSoldProducts()
         {
             try
             {
-                List<Product> returnList = context.GetSoldProducts();
+                List<ProductInOrder> returnList = context.GetSoldProducts();
                 return returnList;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                return new List<Product>();
+                return new List<ProductInOrder>();
             }
 
         }
@@ -292,6 +293,29 @@ namespace StoreServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
+        }
+        #endregion
+
+        #region Remove Product
+        [Route("RemoveProduct")]
+        [HttpPost]
+
+        public bool RemoveProduct(Product p)
+        {
+            try 
+            {
+                Product product = context.Products.FirstOrDefault(pr => pr.ProductId == p.ProductId);
+                product.IsActive = false;
+                context.SaveChanges();
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                return true;
+            }
+            catch
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+
         }
         #endregion
 

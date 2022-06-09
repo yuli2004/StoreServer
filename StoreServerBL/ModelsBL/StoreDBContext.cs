@@ -87,12 +87,13 @@ namespace StoreServerBL.Models
         #endregion
 
         #region get sold products
-        public List<Product> GetSoldProducts()
+        public List<ProductInOrder> GetSoldProducts()
         {
-            List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Include(c => c.Color).Include(s => s.Style).Include(pm => pm.PMaterial).Include(sm => sm.SMaterial)
-                .Where(p => p.IsActive == false).ToList();
-
-            return allProducts;
+            //List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Include(c => c.Color).Include(s => s.Style).Include(pm => pm.PMaterial).Include(sm => sm.SMaterial)
+            //    .Where(p => p.IsActive == false).ToList();
+            List<ProductInOrder> soldProducts = this.ProductInOrders.Include(po=>po.Order).ThenInclude(o=>o.Buyer)
+                .Include(p => p.Product).ThenInclude(c => c.Color).Include(s=>s.Product.Style).Include(pm => pm.Product.PMaterial).Include(sm => sm.Product.SMaterial).ToList();
+            return soldProducts;
         }
         #endregion
 
@@ -139,5 +140,6 @@ namespace StoreServerBL.Models
             }
         }
         #endregion
+
     }
 }
