@@ -93,6 +93,29 @@ namespace StoreServer.Controllers
         }
         #endregion
 
+        #region Edit Profile
+        [Route("EditProfile")]
+        [HttpPost]
+        public User EditProfile([FromBody] User user)
+        {
+            User edit = this.context.EditProfile(user);
+            //Check user name and password
+            if (edit!=null)
+            {
+                HttpContext.Session.SetObject("userLogin", user);
+                HttpContext.Session.SetObject("theUser", user);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return user;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        #endregion
+
         #region UserExistsByEmail
         [Route("UserExistsByEmail")]
         [HttpGet]
@@ -280,13 +303,13 @@ namespace StoreServer.Controllers
         public Product UploadProduct([FromBody] Product pr)
         {
            
-            bool addProduct = this.context.UploadProduct(pr);
+            Product addProduct = this.context.UploadProduct(pr);
             //Check user name and password
-            if (addProduct)
+            if (addProduct!=null)
             {                
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return pr;
+                return addProduct;
             }
             else
             {

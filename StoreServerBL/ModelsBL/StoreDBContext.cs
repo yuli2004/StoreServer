@@ -52,6 +52,24 @@ namespace StoreServerBL.Models
         }
         #endregion
 
+        #region Edit Profile
+        public User EditProfile(User user)
+        {
+            try
+            {
+                this.Users.Update(user);
+                this.Sellers.Update(user.Seller);
+                this.SaveChanges();
+                return this.Users.Where(u=>u.Username==user.Username).Include(s=>s.Seller).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
         #region UserExistsByEmail
         // פעולה הבודקת האם האימייל שהתקבל הוא ייחודי או שהוא כבר קיים ברשימת המשתמשים
         public bool UserExistsByEmail(string email)
@@ -125,18 +143,18 @@ namespace StoreServerBL.Models
         #endregion
 
         #region upload product
-        public bool UploadProduct(Product pr)
+        public Product UploadProduct(Product pr)
         {
             try
             {
                 this.Products.Update(pr);
                 this.SaveChanges();
-                return true;
+                return this.Products.Where(p=>p.ProductId==pr.ProductId).FirstOrDefault();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
         #endregion
