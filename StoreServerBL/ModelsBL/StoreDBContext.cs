@@ -15,8 +15,10 @@ namespace StoreServerBL.Models
         #region Log in
         public User LogIn(string userName, string pass)
         {
-            return this.Users.Include(u=>u.Buyer.Orders).ThenInclude(o=>o.ProductInOrders).ThenInclude(p=>p.Product)
-                .Include(u=>u.Seller.Products).ThenInclude(p=>p.ProductInOrders).ThenInclude(pp=>pp.Order).ThenInclude(ppp=>ppp.Buyer ).Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
+            return this.Users.Include(s=>s.Seller).Include(u=>u.Buyer.Orders).ThenInclude(o=>o.ProductInOrders).ThenInclude(p=>p.Product).ThenInclude(sl=>sl.Seller)
+                .Include(u=>u.Seller.Products).ThenInclude(p=>p.ProductInOrders).ThenInclude(pp=>pp.Order).ThenInclude(ppp=>ppp.Buyer)
+                
+                .Where(u => u.Username == userName && u.Password == pass).FirstOrDefault();
         }
         #endregion
 
@@ -110,7 +112,7 @@ namespace StoreServerBL.Models
             //List<Product> allProducts = this.Products.Include(p => p.Seller.UsernameNavigation).Include(c => c.Color).Include(s => s.Style).Include(pm => pm.PMaterial).Include(sm => sm.SMaterial)
             //    .Where(p => p.IsActive == false).ToList();
             List<ProductInOrder> soldProducts = this.ProductInOrders.Include(po=>po.Order).ThenInclude(o=>o.Buyer)
-                .Include(p => p.Product).ThenInclude(c => c.Color).Include(s=>s.Product.Style).Include(pm => pm.Product.PMaterial).Include(sm => sm.Product.SMaterial).ToList();
+                .Include(p => p.Product).ThenInclude(sl=>sl.Seller).Include(c => c.Product.Color).Include(s=>s.Product.Style).Include(pm => pm.Product.PMaterial).Include(sm => sm.Product.SMaterial).ToList();
             return soldProducts;
         }
         #endregion
